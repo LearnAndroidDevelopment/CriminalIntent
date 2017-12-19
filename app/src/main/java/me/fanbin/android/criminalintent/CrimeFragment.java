@@ -1,5 +1,7 @@
 package me.fanbin.android.criminalintent;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,17 +22,18 @@ import java.util.UUID;
  */
 public class CrimeFragment extends Fragment {
 
-    private static final String ARG_CRIME_ID = "crime_id";
+    private static final String ARG_CRIME_POSITION = "crime_position";
 
     private Crime mCrime;
+    private int mPosition;
 
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
 
-    public static CrimeFragment newInstance(UUID crimeId) {
+    public static CrimeFragment newInstance(int position) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_CRIME_ID, crimeId);
+        args.putSerializable(ARG_CRIME_POSITION, position);
 
         CrimeFragment fragment = new CrimeFragment();
         fragment.setArguments(args);
@@ -40,8 +43,9 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
-        mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
+        int position = getArguments().getInt(ARG_CRIME_POSITION);
+        mCrime = CrimeLab.get(getActivity()).getCrimes().get(position);
+        mPosition = position;
     }
 
     @Nullable
@@ -60,6 +64,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mCrime.setTitle(s.toString());
+                returnResult();
             }
 
             @Override
@@ -78,9 +83,18 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mCrime.setSolved(isChecked);
+                returnResult();
             }
         });
 
         return v;
+    }
+
+    public void returnResult() {
+        Intent data = new Intent();
+        if (data != null) {
+            data.putExtra(CrimeActivity.EXTRA_CREAME_POSITION, mPosition);
+            getActivity().setResult(Activity.RESULT_OK, data);
+        }
     }
 }

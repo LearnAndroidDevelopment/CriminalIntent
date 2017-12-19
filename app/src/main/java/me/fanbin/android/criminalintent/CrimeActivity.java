@@ -11,17 +11,17 @@ import java.util.UUID;
 
 public class CrimeActivity extends SingleFragmentActivity {
 
-    private static final String EXTRA_CREAME_ID = "me.fanbin.androidcriminalintent.crime_id";
+    public static final String EXTRA_CREAME_POSITION = "me.fanbin.androidcriminalintent.crime_position";
 
-    public static Intent newIntent(Context packageContext, UUID crimeId) {
+    public static Intent newIntent(Context packageContext, int position) {
         Intent intent = new Intent(packageContext, CrimeActivity.class);
-        intent.putExtra(EXTRA_CREAME_ID, crimeId);
+        intent.putExtra(EXTRA_CREAME_POSITION, position);
         return intent;
     }
 
     @Override
     protected Fragment createFragment() {
-        UUID crimeId = (UUID) getIntent().getSerializableExtra(EXTRA_CREAME_ID);
-        return CrimeFragment.newInstance(crimeId);
+        int position = getIntent().getIntExtra(EXTRA_CREAME_POSITION, 0);
+        return CrimeFragment.newInstance(position);
     }
 }
