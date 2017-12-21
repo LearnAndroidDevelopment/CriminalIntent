@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.view.ViewPager
-    android:id="@+id/activity_crime_pager_view_pager"
+<android.support.v7.widget.LinearLayoutCompat
+    android:id="@+id/activity_crime_pager_view_pager_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"/>
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/prev_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:text="@string/prev_button"/>
+
+            <Button
+                android:id="@+id/next_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="@string/next_button"/>
+        </TableRow>
+    </TableLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/activity_crime_pager_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"/>
+</android.support.v7.widget.LinearLayoutCompat>
