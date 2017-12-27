@@ -20,6 +20,7 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -40,6 +41,7 @@ public class CrimeFragment extends Fragment {
     private static final String ARG_CRIME_ID = "crime_id";
 
     private static final String DIALOG_DATE = "DialogDate";
+    private static final String DIALOG_PICTURE = "dialogPicture";
 
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_CONTACT = 1;
@@ -167,6 +169,17 @@ public class CrimeFragment extends Fragment {
         });
 
         mPhotoView = (ImageView) v.findViewById(R.id.crime_photo);
+        mPhotoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!CrimeLab.get(getActivity()).getPhotoFile(mCrime).exists()) {
+                    return;
+                }
+                FragmentManager fm = getFragmentManager();
+                PictureFragment dialog = PictureFragment.newInstance(mCrime.getId());
+                dialog.show(fm, DIALOG_PICTURE);
+            }
+        });
 
         updatePhotoView();
 
